@@ -2,14 +2,13 @@ package club.moddedminecraft.tpsmod;
 
 import com.google.gson.Gson;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
 
-import java.io.IOException;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 
 import static club.moddedminecraft.tpsmod.TpsMod.config;
@@ -29,21 +28,44 @@ public class HttpPoster implements Runnable {
         TpsStat tpsStat = new TpsStat(config.getServerId(), LocalDateTime.now(), tps);
         String json = gson.toJson(tpsStat);
 
-        try (CloseableHttpClient client = HttpClientBuilder.create().build()) {
-            HttpPost request = new HttpPost("https://localhost:5001/api/tps-stats");
-            StringEntity requestEntity = new StringEntity(
-                    json,
-                    ContentType.APPLICATION_JSON
-            );
-            request.setHeader("User-Agent", "Java-Client");
-            request.setHeader("X-Auth-Token", config.getApiToken());
-            request.setEntity(requestEntity);
-            HttpResponse response = client.execute(request);
-            int statusCode = response.getStatusLine().getStatusCode();
+        URL url = null;
+        try {
+            url = new URL("https://localhost:5001/api/tps-stats");
+        } catch (MalformedURLException e) {
+            logger.error(e);
+        }
+        HttpURLConnection connection = null;
+        try {
+            connection = (HttpURLConnection)url.openConnection();
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        try {
+            connection.setRequestMethod("POST");
+        } catch (ProtocolException e) {
+            logger.error(e);
+        }
+        connection.setRequestProperty("User-Agent", "Java-Client");
+        connection.setRequestProperty("X-Auth-Token", config.getApiToken());
+        connection.setRequestProperty("X-Auth-Token", config.getApiToken());
+        connection.setDoOutput(true);
+        try(
+                OutputStream outputStream = connection.getOutputStream();
+        ){
+            byte[] data = json.getBytes(StandardCharsets.UTF_8);
+            outputStream.write(data, 0, data.length);
+        } catch (IOException e) {
+            logger.error(e);
+        }
 
-            if (statusCode != 200) {
-                logger.error("Error sending TPS data. HTTP Status code: " + statusCode);
+        try(BufferedReader br = new BufferedReader(
+                new InputStreamReader(connection.getInputStream(), "utf-8"))) {
+            StringBuilder response = new StringBuilder();
+            String responseLine = null;
+            while ((responseLine = br.readLine()) != null) {
+                response.append(responseLine.trim());
             }
+            System.out.println(response.toString()); //do whatever you want with the response here
         } catch (IOException e) {
             logger.error(e);
         }
