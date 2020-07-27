@@ -17,7 +17,7 @@ public class ServerTickEventHandler {
                 lastRecalculate = currentTime;
             } else {
                 long elapsed = System.currentTimeMillis() - lastRecalculate;
-                if (elapsed >= 5 * 1000) {
+                if (elapsed >= 60 * 10 * 1000) {
                     double tps = ((double) tickCount) / (elapsed / 1000.0);
                     Thread postThread = new Thread(new HttpPoster(tps));
                     postThread.start();
