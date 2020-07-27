@@ -26,21 +26,19 @@ public class HttpPoster implements Runnable {
         Gson gson = new Gson();
         TpsStat tpsStat = new TpsStat(config.getServerId(), System.currentTimeMillis(), tps);
         String json = gson.toJson(tpsStat);
-
-        logger.info(json);
-        System.out.println(json);
-
         URL url = null;
         try {
             url = new URL("http://localhost:5000/api/tps-stats");
         } catch (MalformedURLException e) {
             logger.error(e);
+            return;
         }
         HttpURLConnection connection = null;
         try {
-            connection = (HttpURLConnection)url.openConnection();
+            connection = (HttpURLConnection) url.openConnection();
         } catch (IOException e) {
             logger.error(e);
+            return;
         }
         try {
             connection.setRequestMethod("POST");
@@ -50,25 +48,25 @@ public class HttpPoster implements Runnable {
         connection.setRequestProperty("Content-Type", "application/json");
         connection.setRequestProperty("User-Agent", "Java-Client");
         connection.setRequestProperty("X-Auth-Token", config.getApiToken());
-        connection.setRequestProperty("X-Auth-Token", config.getApiToken());
         connection.setDoOutput(true);
-        try(
+        try (
                 OutputStream outputStream = connection.getOutputStream();
-        ){
+        ) {
             byte[] data = json.getBytes(StandardCharsets.UTF_8);
             outputStream.write(data, 0, data.length);
         } catch (IOException e) {
             logger.error(e);
+            return;
         }
 
-        try(BufferedReader br = new BufferedReader(
+        try (BufferedReader br = new BufferedReader(
                 new InputStreamReader(connection.getInputStream(), "utf-8"))) {
             StringBuilder response = new StringBuilder();
             String responseLine = null;
             while ((responseLine = br.readLine()) != null) {
                 response.append(responseLine.trim());
             }
-            System.out.println(response.toString()); //do whatever you want with the response here
+            logger.info("Successfully sent TPS stats." + response.toString());
         } catch (IOException e) {
             logger.error(e);
         }
