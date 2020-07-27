@@ -24,7 +24,6 @@ public class TpsMod
         logger = event.getModLog();
         ConfigReader reader = new ConfigReader();
         config = reader.readConfig();
-        logger.info(config.getApiToken());
     }
 
     @EventHandler

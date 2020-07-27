@@ -1,7 +1,7 @@
 package club.moddedminecraft.tpsmod;
 
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class ServerTickEventHandler {
     private int tickCount = 0;
