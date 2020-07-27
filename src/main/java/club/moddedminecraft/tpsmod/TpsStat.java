@@ -1,17 +1,15 @@
 package club.moddedminecraft.tpsmod;
 
-import java.time.LocalDateTime;
-
 public class TpsStat {
     private int serverId;
-    private LocalDateTime statTime;
+    private long statTime;
     private double tps;
 
     public TpsStat() {
 
     }
 
-    public TpsStat(int serverId, LocalDateTime statTime, double tps) {
+    public TpsStat(int serverId, long statTime, double tps) {
         this.serverId = serverId;
         this.statTime = statTime;
         this.tps = tps;
@@ -25,11 +23,11 @@ public class TpsStat {
         this.serverId = serverId;
     }
 
-    public LocalDateTime getStatTime() {
+    public long getStatTime() {
         return statTime;
     }
 
-    public void setStatTime(LocalDateTime statTime) {
+    public void setStatTime(long statTime) {
         this.statTime = statTime;
     }
 

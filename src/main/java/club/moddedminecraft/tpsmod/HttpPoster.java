@@ -9,7 +9,6 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDateTime;
 
 import static club.moddedminecraft.tpsmod.TpsMod.config;
 import static club.moddedminecraft.tpsmod.TpsMod.logger;
@@ -25,12 +24,15 @@ public class HttpPoster implements Runnable {
     @Override
     public void run() {
         Gson gson = new Gson();
-        TpsStat tpsStat = new TpsStat(config.getServerId(), LocalDateTime.now(), tps);
+        TpsStat tpsStat = new TpsStat(config.getServerId(), System.currentTimeMillis(), tps);
         String json = gson.toJson(tpsStat);
+
+        logger.info(json);
+        System.out.println(json);
 
         URL url = null;
         try {
-            url = new URL("https://localhost:5001/api/tps-stats");
+            url = new URL("http://localhost:5000/api/tps-stats");
         } catch (MalformedURLException e) {
             logger.error(e);
         }
@@ -45,6 +47,7 @@ public class HttpPoster implements Runnable {
         } catch (ProtocolException e) {
             logger.error(e);
         }
+        connection.setRequestProperty("Content-Type", "application/json");
         connection.setRequestProperty("User-Agent", "Java-Client");
         connection.setRequestProperty("X-Auth-Token", config.getApiToken());
         connection.setRequestProperty("X-Auth-Token", config.getApiToken());
