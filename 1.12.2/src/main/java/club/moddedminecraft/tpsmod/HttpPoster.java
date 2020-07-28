@@ -1,8 +1,5 @@
 package club.moddedminecraft.tpsmod;
 
-import com.google.gson.Gson;
-
-
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -23,9 +20,10 @@ public class HttpPoster implements Runnable {
 
     @Override
     public void run() {
-        Gson gson = new Gson();
-        TpsStat tpsStat = new TpsStat(config.getServerId(), System.currentTimeMillis(), tps);
-        String json = gson.toJson(tpsStat);
+        String json = "{"
+                + "\n    \"serverId\": " + config.getServerId() + ","
+                + "\n    \"tps\": " + tps + "\n"
+                + "}";
         URL url = null;
         try {
             url = new URL("http://localhost:5000/api/tps-stats");
