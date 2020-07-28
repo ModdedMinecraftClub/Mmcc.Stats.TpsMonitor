@@ -1,15 +1,13 @@
 [
 {
-  "modid": "examplemod",
-  "name": "Example Mod",
-  "description": "Example placeholder mod.",
+  "modid": "tpsmod",
+  "name": "MMCC TPS Mod",
+  "description": "TPS Monitor MC mod for Mmcc.Stats",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "",
-  "updateUrl": "",
-  "authorList": ["ExampleDude"],
-  "credits": "The Forge and FML guys, for making this example",
-  "logoFile": "",
+  "url": "https://github.com/ModdedMinecraftClub/mmcc-tps-monitor",
+  "authorList": ["ModdedMinecraftClub", "TraceLD", "john01dav"],
+  "credits": "The Forge and FML guys, for making this vile twattery that is Forge",
   "screenshots": [],
   "dependencies": []
 }
