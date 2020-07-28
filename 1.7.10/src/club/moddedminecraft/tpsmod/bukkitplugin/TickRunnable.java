@@ -24,7 +24,7 @@ public class TickRunnable extends BukkitRunnable {
             lastRecalculate = currentTime;
         } else {
             long elapsed = System.currentTimeMillis() - lastRecalculate;
-            if (elapsed >= 10 * 1000) {
+            if (elapsed >= 60 * 10 * 1000) {
                 double tps = ((double) tickCount) / (elapsed / 1000.0);
                 Thread postThread = new Thread(new HttpPoster(logger, config, tps));
                 postThread.start();
