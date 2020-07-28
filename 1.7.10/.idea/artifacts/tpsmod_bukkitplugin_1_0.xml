@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="tpsmod-bukkitplugin-1.0">
+    <output-path>$PROJECT_DIR$/out/artifacts/tpsmod_bukkitplugin_1_0</output-path>
+    <root id="archive" name="tpsmod-bukkitplugin-1.0.jar">
+      <element id="module-output" name="1.7.10" />
+    </root>
+  </artifact>
+</component>
