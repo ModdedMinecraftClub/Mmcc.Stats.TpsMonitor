@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="tpsmod-bukkitplugin-1.0.jar" />
+      <artifact name="tpsmod-bukkitplugin-1.0" />
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">

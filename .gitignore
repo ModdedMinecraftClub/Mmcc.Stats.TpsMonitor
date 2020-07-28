@@ -10,7 +10,8 @@ bin
 out
 *.ipr
 *.iws
-*.iml
+1.12.2/*.iml
+1.15.2/*.iml
 1.12.2/.idea
 1.15.2/.idea
 
