@@ -1,0 +1,3 @@
+name: tpsmod-bukkitplugin
+main: club.moddedminecraft.tpsmod.bukkitplugin.TpsPlugin
+version: 1.0.0
