@@ -26,7 +26,6 @@ public class HttpPoster implements Runnable {
     public void run() {
         String json = "{"
                 + "\n    \"serverId\": " + config.getServerId() + ","
-                + "\n    \"statTime\": " + System.currentTimeMillis() + ","
                 + "\n    \"tps\": " + tps + "\n"
                 + "}";
 
